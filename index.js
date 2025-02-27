@@ -6,12 +6,12 @@ require('dotenv').config();
 const app=express();
 app.use(express.json());
 connectToDatabase();
+
 app.use('/user', userRoute);
 app.use('/restaurantOwner', ownerRoute);
 
 app.get('/', (req,res)=>{
-    res.send("HELLO !")
+    res.send("HELLO THIS IS HOME PAGE!")
 })
-
 
 app.listen(process.env.PORT);
