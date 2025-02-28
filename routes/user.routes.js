@@ -6,6 +6,6 @@ userRoute.post('/signup', signupHandler);
 userRoute.post('/signin', signinHandler);
 
 //add review
-userRoute.post('/review')
+// userRoute.post('/review')
 
 module.exports = userRoute;

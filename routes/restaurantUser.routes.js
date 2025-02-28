@@ -5,4 +5,6 @@ const {signinHandler,signupHandler} = require('../controllers/restaurantOwnerAut
 ownerRoute.post('/signup', signupHandler);
 ownerRoute.post('/signin', signinHandler);
 
+//particular owner restaurants
+
 module.exports = ownerRoute;
