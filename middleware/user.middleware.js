@@ -1,4 +1,5 @@
 //User middleware
+const jwt=require('jsonwebtoken');
 require('dotenv').config();
 async function userMiddleware(req,res,next) {
     try {

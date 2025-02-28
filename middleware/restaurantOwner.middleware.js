@@ -1,4 +1,5 @@
 //restaurant Owner middleware
+const jwt=require('jsonwebtoken');
 require('dotenv').config();
 async function restaurantOwnerMiddleware(req,res,next) {
     try {
