@@ -1,4 +1,5 @@
 const { restaurantModel } = require("../models/restaurant.model");
+const { userModel } = require("../models/user.model");
 
 //read
 async function allRestaurantHandler(req, res) {
@@ -20,11 +21,11 @@ async function allRestaurantHandler(req, res) {
 async function createNewRestaurantHandler(req, res) {
   try {
     const ownerId= req.ownerId;
-    const { name, address, ratings, status, imageUrl} = req.body;
+    const { name, address, city, status, imageUrl} = req.body;
     const newRestaurant = await restaurantModel.create({
       name,
       address,
-      ratings,
+      city,
       status,
       imageUrl,
       owner:ownerId,
@@ -93,17 +94,24 @@ async function deleteRestaurantHandler(req, res) {
 }
 
 async function reviewHandler(req, res) {
+  const userId=req.userId;
   try {
-    const { rating, id} = req.body;
+    const {comment, rating, id} = req.body;
     if (!id) {
       return res.status(400).json({
         message: "enter valid id",
       });
     }
     const restaurant = await restaurantModel.findOne({ _id:id });
-    const currentRating = restaurant.ratings || 0;
-    const newRating = currentRating === 0 ? rating : (currentRating + rating) / 2;
-    restaurant.ratings = parseFloat(newRating.toFixed(2));
+    const user=await userModel.findById(userId);
+    const newReview = {
+      reviewerName:user.name,
+      rating,
+      comment,
+    };
+  
+    restaurant.reviews.push(newReview);
+
     const updatedRestaurant = await restaurant.save();
     res.json({
       success: true,
@@ -125,3 +133,5 @@ module.exports = {
   deleteRestaurantHandler,
   reviewHandler
 };
+
+
