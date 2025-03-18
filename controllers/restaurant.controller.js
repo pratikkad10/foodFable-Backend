@@ -126,12 +126,30 @@ async function reviewHandler(req, res) {
   }
 }
 
+async function fetchRestaurant(req,res) {
+  const ownerId=req.ownerId;
+  try {
+    const restaurant=await restaurantModel.findOne({owner:ownerId});
+    res.json({
+      success:true,
+      restaurant:restaurant
+    })
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to review restaurant. Please try again later.",
+      error:error
+    });
+  }
+}
+
 module.exports = {
   allRestaurantHandler,
   createNewRestaurantHandler,
   updateRestaurantHandler,
   deleteRestaurantHandler,
-  reviewHandler
+  reviewHandler,
+  fetchRestaurant
 };
 
 
